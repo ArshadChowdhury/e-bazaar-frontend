@@ -9,6 +9,7 @@ import ProductCard from "@/components/ProductCard";
 import EmptyState from "@/components/EmptyState";
 import Cart from "@/components/Cart";
 import AddProduct from "@/components/AddProduct";
+import Pagination from "@/components/Pagination";
 
 // axios
 //   .get("http://localhost:3000/products/all-products")
@@ -24,9 +25,9 @@ import AddProduct from "@/components/AddProduct";
 //     // always executed
 //   });
 
-
 export default function Home() {
   const [open, setOpen] = useState(false);
+  const [page, setPage] = useState(1);
   const [searchParam, setSearchParam] = useState("");
   const [cartOpen, setCartOpen] = useState(false);
   const [response, setResponse] = useState<any>([]);
@@ -35,21 +36,21 @@ export default function Home() {
   useEffect(() => {
     axios
       .get("http://localhost:3000/products/all-products", {
-        params: searchParam && {
+        params: (searchParam || page) && {
           search: searchParam,
+          page: page,
         },
       })
-      .then((result: any) => setResponse(result))
+      .then((response: object) => setResponse(response))
       .catch((err) => console.warn(err));
-  }, [searchParam]);
+  }, [searchParam, page]);
 
   useEffect(() => {
     axios
       .get("http://localhost:3000/cart/all-cartItems")
-      .then((result: any) => setCartResponse(result))
+      .then((response: any) => setCartResponse(response))
       .catch((err) => console.warn(err));
-  }, []);
-  
+  }, [cartResponse]);
 
   return (
     <>
@@ -78,18 +79,19 @@ export default function Home() {
               width={22}
               alt="cart-icon"
             />
-            Cart {cartResponse.data?.length > 0 && `(${cartResponse.data.length})`}
+            Cart{" "}
+            {cartResponse.data?.length > 0 && `(${cartResponse.data.length})`}
           </button>
         </nav>
       </header>
 
-      <main className="flex flex-col max-w-7xl md:mx-auto">
-        <section className="mx-4 sm:mx-0 my-6 flex flex-col md:flex-row gap-8">
+      <main className="flex flex-col max-w-7xl lg:mx-auto mx-4">
+        <section className="my-6 flex flex-col md:flex-row gap-8">
           <InfoCard
             imageSrc={"/assets/product.png"}
-            title={"Total Product : 100"}
+            title={`Total Product : ${response.data?.dataCount}`}
             description={
-              "Warehouse has total of 100 product today & the max capacity is 200."
+              `Warehouse has total of ${response.data?.dataCount} product today & the max capacity is 200.`
             }
           />
           <InfoCard
@@ -101,14 +103,14 @@ export default function Home() {
           />
           <InfoCard
             imageSrc={"/assets/unique.png"}
-            title={"Unique Product : 40"}
+            title={`Unique Product : ${response.data?.dataCount}`}
             description={
               "Total number of products that are not duplicate or redundant."
             }
           />
         </section>
 
-        <section className="m-4 sm:mx-0 flex flex-col-reverse md:flex-row gap-6 relative">
+        <section className="flex flex-col-reverse md:flex-row gap-6 relative">
           <input
             onChange={(event) => setSearchParam(event.target.value)}
             className="w-full lg:w-11/12 bg-light-white border border-light-gray rounded-md text-sm p-3 outline-none"
@@ -131,22 +133,39 @@ export default function Home() {
 
         <AddProduct open={open} setOpen={setOpen} />
 
-        <Cart cartOpen={cartOpen} setCartOpen={setCartOpen} cartData={cartResponse} />
+        <Cart
+          cartOpen={cartOpen}
+          setCartOpen={setCartOpen}
+          cartData={cartResponse}
+        />
 
-        <section className="text-2xl font-medium mx-4 sm:mx-0">
+        <section className="text-2xl font-medium">
           <h3 className="my-4">
-            Showing {response.data?.length} of 100 results
+            Showing {response.data?.results?.length} of{" "}
+            {response.data?.dataCount} results
           </h3>
-          <div className="grid grid-cols-1 lg:grid-cols-4">
-            {response.data?.length > 0 &&
-              response.data?.map((product: [], index: number) => (
-                <ProductCard key={index} product={product} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {response.data?.results?.length > 0 &&
+              response.data?.results.map((product: [], index: number) => (
+                <ProductCard
+                  key={index}
+                  product={product}
+                  cartResponse={cartResponse}
+                />
               ))}
           </div>
-          {response.data?.length <= 0 && <EmptyState />}
+          {response.data?.results.length <= 0 && <EmptyState message={"Sorry we found no product with that name"} />}
         </section>
 
-        <aside>{/* <Pagination /> */}</aside>
+        <aside className="py-6 flex sm:justify-end justify-center">
+          {response.data?.results.length > 0 && (
+            <Pagination
+              setPage={setPage}
+              page={page}
+              dataCount={response.data?.dataCount}
+            />
+          )}
+        </aside>
       </main>
     </>
   );

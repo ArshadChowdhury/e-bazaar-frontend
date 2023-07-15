@@ -39,9 +39,9 @@ export default function AddProduct({ open, setOpen }: any) {
           setPrice("");
           setSlug("");
           setProductName("");
-          return toast.success("Product Created");
+          return toast.success("Product added to collection");
         }
-        return toast.error("Product creation failed");
+        return toast.error("Product adding failed");
       })
       .catch(function (error) {
         console.log(error);

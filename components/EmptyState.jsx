@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 
-const EmptyState = () => {
+const EmptyState = ({message}) => {
   return (
     <div className="flex flex-col justify-center items-center">
       <Image
@@ -10,7 +10,7 @@ const EmptyState = () => {
         width={300}
         alt="no-product-found"
       />
-      <p>Sorry we found no product with that name</p>
+      <p>{message}</p>
     </div>
   );
 };
