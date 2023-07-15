@@ -33,8 +33,8 @@ function CartDrawer({ open, setOpen, children, ...props }: any) {
                   leaveFrom="translate-x-0"
                   leaveTo="translate-x-full"
                 >
-                  <Dialog.Panel className="pointer-events-auto w-screen h-screen md:max-w-lg max-w-xs">
-                    <div className="flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl">
+                  <Dialog.Panel className="pointer-events-auto w-screen h-screen max-w-xl">
+                    <div className="flex h-full flex-col bg-white shadow-xl">
                       <div className="h-0 flex-1 overflow-y-auto">
                         <div className="p-4">{children}</div>
                       </div>
