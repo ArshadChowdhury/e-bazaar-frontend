@@ -3,7 +3,6 @@ import Image from "next/image";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
-
 export default function ProductCard({ product, cartResponse, cartFetch }: any) {
   const foundProductNamesAndId: any = [];
   cartResponse.data?.map((cartItem: any) => {
@@ -23,7 +22,7 @@ export default function ProductCard({ product, cartResponse, cartFetch }: any) {
   const handleDeleteFromCart = (found: any) => {
     if (found.quantity > 1) {
       return axios
-        .patch(`${process.env.API_URL}/cart/edit/${found.id}`, {
+        .patch(`/cart/edit/${found.id}`, {
           quantity: found.quantity > 0 ? parseInt(found.quantity) - 1 : null,
         })
         .then(function (response) {
@@ -38,7 +37,7 @@ export default function ProductCard({ product, cartResponse, cartFetch }: any) {
         });
     } else {
       return axios
-        .delete(`${process.env.API_URL}/cart/delete/${found.id}`)
+        .delete(`/cart/delete/${found.id}`)
         .then(function (response) {
           if (response.status == 200) {
             cartFetch();
@@ -55,7 +54,7 @@ export default function ProductCard({ product, cartResponse, cartFetch }: any) {
   const handleIncreaseInCart = (found: any) => {
     if (found) {
       return axios
-        .patch(`${process.env.API_URL}/cart/edit/${found.id}`, {
+        .patch(`/cart/edit/${found.id}`, {
           quantity: parseInt(found.quantity) + 1,
         })
         .then(function (response) {
@@ -84,7 +83,7 @@ export default function ProductCard({ product, cartResponse, cartFetch }: any) {
 
     if (found) {
       return axios
-        .patch(`${process.env.API_URL}/cart/edit/${found.id}`, {
+        .patch(`/cart/edit/${found.id}`, {
           quantity: parseInt(found.quantity) + 1,
         })
         .then(function (response) {
@@ -99,7 +98,7 @@ export default function ProductCard({ product, cartResponse, cartFetch }: any) {
         });
     } else {
       return axios
-        .post(`${process.env.API_URL}/cart/add-toCart`, payload)
+        .post(`/cart/add-toCart`, payload)
         .then(function (response) {
           if (response.status == 201) {
             cartFetch();

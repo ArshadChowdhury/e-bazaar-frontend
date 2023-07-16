@@ -7,7 +7,6 @@ type Props = {
 };
 
 export default function Pagination({ setPage, dataCount, page }: Props) {
-  
   const totalPages = Math.ceil(dataCount / 8);
 
   const handlePageChange = (pageNumber: number) => {

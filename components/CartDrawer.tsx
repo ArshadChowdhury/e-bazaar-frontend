@@ -2,7 +2,6 @@ import { Fragment, ReactNode } from "react";
 
 import { Dialog, Transition } from "@headlessui/react";
 
-
 type Props = {
   open: boolean;
   setOpen: any;

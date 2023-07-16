@@ -27,7 +27,7 @@ export default function Cart({
 
     if (confirmed) {
       axios
-        .delete(`${process.env.API_URL}/cart/delete/${uid}`)
+        .delete(`/cart/delete/${uid}`)
         .then(function (response) {
           if (response.status == 200) {
             cartFetch();

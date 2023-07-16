@@ -13,7 +13,6 @@ import InfoCard from "@/components/InfoCard";
 import ProductCard from "@/components/ProductCard";
 import Pagination from "@/components/Pagination";
 
-
 export default function Home() {
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(1);
@@ -22,11 +21,9 @@ export default function Home() {
   const [response, setResponse] = useState<any>([]);
   const [cartResponse, setCartResponse] = useState<any>([]);
 
-  
-
   const productFetch = () => {
     axios
-      .get(`${process.env.API_URL}/products/all-products`, {
+      .get(`/products/all-products`, {
         params: {
           search: searchParam,
           page: page,
@@ -38,14 +35,14 @@ export default function Home() {
 
   const cartFetch = () => {
     axios
-      .get(`${process.env.API_URL}/cart/all-cartItems`)
+      .get(`/cart/all-cartItems`)
       .then((response: any) => setCartResponse(response))
       .catch((err) => console.warn(err));
   };
 
   useEffect(() => {
     axios
-      .get(`${process.env.API_URL}/products/all-products`, {
+      .get(`/products/all-products`, {
         params: {
           search: searchParam,
           page: page,
@@ -64,7 +61,7 @@ export default function Home() {
       <header className="md:border-b border-light-gray mx-4 lg:mx-0">
         <nav className="max-w-7xl md:mx-auto mx-4 flex justify-between my-8">
           <Image
-          className="md:w-44 md:h-10 w-32 h-8 object-contain"
+            className="md:w-44 md:h-10 w-32 h-8 object-contain"
             src="/logo/logo-original.png"
             height={40}
             width={170}

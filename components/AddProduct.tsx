@@ -30,7 +30,7 @@ export default function AddProduct({ open, setOpen, productFetch }: any) {
       return alert("Product price should be in whole number");
 
     axios
-      .post(`${process.env.API_URL}/products/create-product`, payload)
+      .post(`/products/create-product`, payload)
       .then(function (response) {
         if (response.status == 201) {
           productFetch();
