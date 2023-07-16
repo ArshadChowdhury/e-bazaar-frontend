@@ -5,7 +5,7 @@ import { useState } from "react";
 import slugify from "slugify";
 import { toast } from "react-hot-toast";
 
-export default function AddProduct({ open, setOpen }: any) {
+export default function AddProduct({ open, setOpen, productFetch }: any) {
   const [productName, setProductName] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -21,18 +21,21 @@ export default function AddProduct({ open, setOpen }: any) {
   };
 
   const handleAddProduct = (payload: any) => {
-
-    if(payload.name == "") return alert("Product name is required");
-    if(payload.slug == "") return alert("Product slug is required");
-    if(payload.price == "") return alert("Product price is required");
-    if(payload.discount_startDate == "") return alert("Product discount start date is required");
-    if(payload.discount_endDate == "") return alert("Product discount end date is required");
-
+    if (payload.name == "") return alert("Product name is required");
+    if (payload.slug == "") return alert("Product slug is required");
+    if (payload.price == "") return alert("Product price is required");
+    if (payload.price != parseInt(payload.price))
+      return alert("Product price should be in whole number");
+    if (payload.discount_startDate == "")
+      return alert("Product discount start date is required");
+    if (payload.discount_endDate == "")
+      return alert("Product discount end date is required");
 
     axios
       .post("http://localhost:3000/products/create-product", payload)
       .then(function (response) {
         if (response.status == 201) {
+          productFetch();
           setOpen(false);
           setStartDate("");
           setEndDate("");
@@ -64,7 +67,10 @@ export default function AddProduct({ open, setOpen }: any) {
             Add New Product
           </h1>
           <XMarkIcon
-            onClick={() => setOpen(false)}
+            onClick={() => {
+              setOpen(false);
+              setSlug("");
+            }}
             className="w-6 md:w-10 cursor-pointer"
           />
         </div>
@@ -89,7 +95,15 @@ export default function AddProduct({ open, setOpen }: any) {
                 Slug
               </label>
               <button
-                onClick={() => setSlug(slugify(productName))}
+                onClick={() =>
+                  setSlug(
+                    slugify(productName, {
+                      lower: true,
+                      trim: true,
+                      remove: undefined,
+                    })
+                  )
+                }
                 className="absolute right-2 top-8 px-4 py-1 bg-dark-sky rounded-lg text-light-white"
               >
                 Generate

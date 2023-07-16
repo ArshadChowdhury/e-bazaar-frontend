@@ -33,10 +33,29 @@ export default function Home() {
   const [response, setResponse] = useState<any>([]);
   const [cartResponse, setCartResponse] = useState<any>([]);
 
+  const productFetch = () => {
+    axios
+      .get("http://localhost:3000/products/all-products", {
+        params: {
+          search: searchParam,
+          page: page,
+        },
+      })
+      .then((response: object) => setResponse(response))
+      .catch((err) => console.warn(err));
+  };
+
+  const cartFetch = () => {
+    axios
+      .get("http://localhost:3000/cart/all-cartItems")
+      .then((response: any) => setCartResponse(response))
+      .catch((err) => console.warn(err));
+  };
+
   useEffect(() => {
     axios
       .get("http://localhost:3000/products/all-products", {
-        params: (searchParam || page) && {
+        params: {
           search: searchParam,
           page: page,
         },
@@ -46,11 +65,8 @@ export default function Home() {
   }, [searchParam, page]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/cart/all-cartItems")
-      .then((response: any) => setCartResponse(response))
-      .catch((err) => console.warn(err));
-  }, [cartResponse]);
+    cartFetch();
+  }, []);
 
   return (
     <>
@@ -64,15 +80,17 @@ export default function Home() {
           />
           <button
             onClick={() => setCartOpen(true)}
-            className="relative border border-light-gray px-2 md:px-6 md:py-2 rounded-md flex items-center gap-2 font-medium text-sm md:text-base"
+            className="relative border border-light-gray px-2 md:px-6 md:py-2 rounded-md flex items-center gap-3 font-medium text-sm md:text-base"
           >
-            <Image
-              className="absolute top-1 left-[18px] sm:top-[2px] sm:left-[34px]"
-              src="/assets/cart-counter-icon.png"
-              height={16}
-              width={16}
-              alt="e-bazaar-logo"
-            />
+            {cartResponse.data?.length > 0 && (
+              <Image
+                className="absolute top-1 left-[18px] sm:top-[2px] sm:left-[34px]"
+                src="/assets/cart-counter-icon.png"
+                height={16}
+                width={16}
+                alt="e-bazaar-logo"
+              />
+            )}
             <Image
               src="/assets/cart-icon.png"
               height={22}
@@ -89,10 +107,16 @@ export default function Home() {
         <section className="my-6 flex flex-col md:flex-row gap-8">
           <InfoCard
             imageSrc={"/assets/product.png"}
-            title={`Total Product : ${response.data?.dataCount}`}
-            description={
-              `Warehouse has total of ${response.data?.dataCount} product today & the max capacity is 200.`
-            }
+            title={`Total Product : ${
+              response.data?.dataCount > 0
+                ? response.data?.dataCount
+                : "0"
+            }`}
+            description={`Warehouse has total of ${
+              response.data?.dataCount > 0
+                ? response.data?.dataCount
+                : "0"
+            } product today & the max capacity is 200.`}
           />
           <InfoCard
             imageSrc={"/assets/vendor.png"}
@@ -103,7 +127,11 @@ export default function Home() {
           />
           <InfoCard
             imageSrc={"/assets/unique.png"}
-            title={`Unique Product : ${response.data?.dataCount}`}
+            title={`Unique Product : ${
+              response.data?.dataCount > 0
+                ? response.data?.dataCount
+                : "0"
+            }`}
             description={
               "Total number of products that are not duplicate or redundant."
             }
@@ -131,12 +159,13 @@ export default function Home() {
           </button>
         </section>
 
-        <AddProduct open={open} setOpen={setOpen} />
+        <AddProduct open={open} setOpen={setOpen} productFetch={productFetch} />
 
         <Cart
           cartOpen={cartOpen}
           setCartOpen={setCartOpen}
           cartData={cartResponse}
+          cartFetch={cartFetch}
         />
 
         <section className="text-2xl font-medium">
@@ -150,11 +179,14 @@ export default function Home() {
                 <ProductCard
                   key={index}
                   product={product}
+                  cartFetch={cartFetch}
                   cartResponse={cartResponse}
                 />
               ))}
           </div>
-          {response.data?.results.length <= 0 && <EmptyState message={"Sorry we found no product with that name"} />}
+          {response.data?.results.length <= 0 && (
+            <EmptyState message={"Sorry we found no product with that name"} />
+          )}
         </section>
 
         <aside className="py-6 flex sm:justify-end justify-center">

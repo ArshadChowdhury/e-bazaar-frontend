@@ -5,27 +5,47 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import EmptyState from "./EmptyState";
 
-export default function Cart({ cartOpen, setCartOpen, cartData }: any) {
+export default function Cart({
+  cartOpen,
+  setCartOpen,
+  cartData,
+  cartFetch,
+}: any) {
   const handleCartDelete = (uid: string) => {
-    axios
-      .delete(`http://localhost:3000/cart/delete/${uid}`)
-      .then(function (response) {
-        if (response.status == 200) {
-          return toast.success("Product deleted from cart");
-        }
-        return toast.error("Product deletion failed");
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    const confirmed = window.confirm(
+      "Are you you want to delete this from Cart ?"
+    );
+
+    if (confirmed) {
+      axios
+        .delete(`http://localhost:3000/cart/delete/${uid}`)
+        .then(function (response) {
+          if (response.status == 200) {
+            cartFetch();
+            return toast.success("Product deleted from cart");
+          }
+          return toast.error("Product deletion failed");
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
   };
+  const allCartItems: any = [];
+  cartData.data?.map((cartItem: any) =>
+    allCartItems.push(parseInt(cartItem.price) * cartItem.quantity)
+  );
+  const subTotal = allCartItems.reduce(
+    (accumulator: any, currentValue: any) => accumulator + currentValue,
+    0
+  );
 
   return (
     <CartDrawer open={cartOpen} setOpen={setCartOpen}>
-      <section className="min-h-screen max-w-lg mx-auto flex flex-col">
+      <section className="max-w-lg mx-auto flex flex-col">
         <div>
           <div className="flex my-8 justify-between items-center">
-            <h1 className="text-[40px] font-semibold">Shopping Cart</h1>
+            <h1 className="text-4xl font-semibold">Shopping Cart</h1>
             <XMarkIcon
               onClick={() => setCartOpen(false)}
               className="w-6 md:w-10 cursor-pointer"
@@ -63,13 +83,14 @@ export default function Cart({ cartOpen, setCartOpen, cartData }: any) {
                 </div>
               </div>
             ))
-          ) : (
+          ) : (<div className="h-96 flex justify-center items-center">
             <EmptyState message={"No items are added in the cart"} />
+            </div>
           )}
         </div>
         <div className="flex justify-between my-4">
           <p className="text-mid-gray text-3xl">Subtotal</p>
-          <p className="text-dark-gray font-semibold text-3xl mx-80">$1200</p>
+          <p className="text-dark-gray font-semibold text-3xl">${subTotal}</p>
         </div>
       </section>
     </CartDrawer>
