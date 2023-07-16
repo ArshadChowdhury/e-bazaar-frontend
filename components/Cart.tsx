@@ -27,7 +27,9 @@ export default function Cart({
 
     if (confirmed) {
       axios
-        .delete(`/cart/delete/${uid}`)
+        .delete(`/cart/delete/${uid}`, {
+          baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+        })
         .then(function (response) {
           if (response.status == 200) {
             cartFetch();

@@ -28,6 +28,7 @@ export default function Home() {
           search: searchParam,
           page: page,
         },
+        baseURL: process.env.NEXT_PUBLIC_BASE_URL,
       })
       .then((response: object) => setResponse(response))
       .catch((err) => console.warn(err));
@@ -35,7 +36,7 @@ export default function Home() {
 
   const cartFetch = () => {
     axios
-      .get(`/cart/all-cartItems`)
+      .get(`/cart/all-cartItems`, { baseURL: process.env.NEXT_PUBLIC_BASE_URL })
       .then((response: any) => setCartResponse(response))
       .catch((err) => console.warn(err));
   };
@@ -47,6 +48,7 @@ export default function Home() {
           search: searchParam,
           page: page,
         },
+        baseURL: process.env.NEXT_PUBLIC_BASE_URL,
       })
       .then((response: object) => setResponse(response))
       .catch((err) => console.warn(err));
