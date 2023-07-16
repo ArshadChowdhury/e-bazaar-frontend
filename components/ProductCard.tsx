@@ -23,7 +23,7 @@ export default function ProductCard({ product, cartResponse, cartFetch }: any) {
   const handleDeleteFromCart = (found: any) => {
     if (found.quantity > 1) {
       return axios
-        .patch(`http://localhost:3000/cart/edit/${found.id}`, {
+        .patch(`${process.env.BASE_URL}/cart/edit/${found.id}`, {
           quantity: found.quantity > 0 ? parseInt(found.quantity) - 1 : null,
         })
         .then(function (response) {
@@ -38,7 +38,7 @@ export default function ProductCard({ product, cartResponse, cartFetch }: any) {
         });
     } else {
       return axios
-        .delete(`http://localhost:3000/cart/delete/${found.id}`)
+        .delete(`${process.env.BASE_URL}/cart/delete/${found.id}`)
         .then(function (response) {
           if (response.status == 200) {
             cartFetch();
@@ -55,7 +55,7 @@ export default function ProductCard({ product, cartResponse, cartFetch }: any) {
   const handleIncreaseInCart = (found: any) => {
     if (found) {
       return axios
-        .patch(`http://localhost:3000/cart/edit/${found.id}`, {
+        .patch(`${process.env.BASE_URL}/cart/edit/${found.id}`, {
           quantity: parseInt(found.quantity) + 1,
         })
         .then(function (response) {
@@ -84,7 +84,7 @@ export default function ProductCard({ product, cartResponse, cartFetch }: any) {
 
     if (found) {
       return axios
-        .patch(`http://localhost:3000/cart/edit/${found.id}`, {
+        .patch(`${process.env.BASE_URL}/cart/edit/${found.id}`, {
           quantity: parseInt(found.quantity) + 1,
         })
         .then(function (response) {
@@ -99,7 +99,7 @@ export default function ProductCard({ product, cartResponse, cartFetch }: any) {
         });
     } else {
       return axios
-        .post("http://localhost:3000/cart/add-toCart", payload)
+        .post(`${process.env.BASE_URL}/cart/add-toCart`, payload)
         .then(function (response) {
           if (response.status == 201) {
             cartFetch();

@@ -22,9 +22,11 @@ export default function Home() {
   const [response, setResponse] = useState<any>([]);
   const [cartResponse, setCartResponse] = useState<any>([]);
 
+  
+
   const productFetch = () => {
     axios
-      .get("http://localhost:3000/products/all-products", {
+      .get(`${process.env.BASE_URL}/products/all-products`, {
         params: {
           search: searchParam,
           page: page,
@@ -36,14 +38,14 @@ export default function Home() {
 
   const cartFetch = () => {
     axios
-      .get("http://localhost:3000/cart/all-cartItems")
+      .get(`${process.env.BASE_URL}/cart/all-cartItems`)
       .then((response: any) => setCartResponse(response))
       .catch((err) => console.warn(err));
   };
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/products/all-products", {
+      .get(`${process.env.BASE_URL}/products/all-products`, {
         params: {
           search: searchParam,
           page: page,
