@@ -26,7 +26,7 @@ export default function Home() {
 
   const productFetch = () => {
     axios
-      .get(`${process.env.BASE_URL}/products/all-products`, {
+      .get(`${process.env.API_URL}/products/all-products`, {
         params: {
           search: searchParam,
           page: page,
@@ -38,14 +38,14 @@ export default function Home() {
 
   const cartFetch = () => {
     axios
-      .get(`${process.env.BASE_URL}/cart/all-cartItems`)
+      .get(`${process.env.API_URL}/cart/all-cartItems`)
       .then((response: any) => setCartResponse(response))
       .catch((err) => console.warn(err));
   };
 
   useEffect(() => {
     axios
-      .get(`${process.env.BASE_URL}/products/all-products`, {
+      .get(`${process.env.API_URL}/products/all-products`, {
         params: {
           search: searchParam,
           page: page,
