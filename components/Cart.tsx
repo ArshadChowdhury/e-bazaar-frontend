@@ -20,7 +20,6 @@ export default function Cart({
   cartData,
   cartFetch,
 }: Props) {
-  axios.defaults.baseURL = process.env.NEXT_PUBLIC_BASE_URL;
   const handleCartDelete = (uid: string) => {
     const confirmed = window.confirm(
       "Are you you want to delete this from Cart ?"
@@ -28,7 +27,7 @@ export default function Cart({
 
     if (confirmed) {
       axios
-        .delete(`/cart/delete/${uid}`)
+        .delete(`https://e-bazaar-backend.up.railway.app/cart/delete/${uid}`)
         .then(function (response) {
           if (response.status == 200) {
             cartFetch();

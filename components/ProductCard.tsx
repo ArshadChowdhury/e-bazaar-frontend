@@ -6,8 +6,6 @@ import { toast } from "react-hot-toast";
 export default function ProductCard({ product, cartResponse, cartFetch }: any) {
   const foundProductNamesAndId: any = [];
 
-  axios.defaults.baseURL = process.env.NEXT_PUBLIC_BASE_URL;
-
   cartResponse.data?.map((cartItem: any) => {
     foundProductNamesAndId.push({
       name: cartItem.name,
@@ -25,9 +23,12 @@ export default function ProductCard({ product, cartResponse, cartFetch }: any) {
   const handleDeleteFromCart = (found: any) => {
     if (found.quantity > 1) {
       return axios
-        .patch(`/cart/edit/${found.id}`, {
-          quantity: found.quantity > 0 ? parseInt(found.quantity) - 1 : null,
-        })
+        .patch(
+          `https://e-bazaar-backend.up.railway.app/cart/edit/${found.id}`,
+          {
+            quantity: found.quantity > 0 ? parseInt(found.quantity) - 1 : null,
+          }
+        )
         .then(function (response) {
           if (response.status == 200) {
             cartFetch();
@@ -40,7 +41,9 @@ export default function ProductCard({ product, cartResponse, cartFetch }: any) {
         });
     } else {
       return axios
-        .delete(`/cart/delete/${found.id}`)
+        .delete(
+          `https://e-bazaar-backend.up.railway.app/cart/delete/${found.id}`
+        )
         .then(function (response) {
           if (response.status == 200) {
             cartFetch();
@@ -57,9 +60,12 @@ export default function ProductCard({ product, cartResponse, cartFetch }: any) {
   const handleIncreaseInCart = (found: any) => {
     if (found) {
       return axios
-        .patch(`/cart/edit/${found.id}`, {
-          quantity: parseInt(found.quantity) + 1,
-        })
+        .patch(
+          `https://e-bazaar-backend.up.railway.app/cart/edit/${found.id}`,
+          {
+            quantity: parseInt(found.quantity) + 1,
+          }
+        )
         .then(function (response) {
           if (response.status == 200) {
             cartFetch();
@@ -86,9 +92,12 @@ export default function ProductCard({ product, cartResponse, cartFetch }: any) {
 
     if (found) {
       return axios
-        .patch(`/cart/edit/${found.id}`, {
-          quantity: parseInt(found.quantity) + 1,
-        })
+        .patch(
+          `https://e-bazaar-backend.up.railway.app/cart/edit/${found.id}`,
+          {
+            quantity: parseInt(found.quantity) + 1,
+          }
+        )
         .then(function (response) {
           if (response.status == 200) {
             cartFetch();
@@ -101,7 +110,10 @@ export default function ProductCard({ product, cartResponse, cartFetch }: any) {
         });
     } else {
       return axios
-        .post(`/cart/add-toCart`, payload)
+        .post(
+          `https://e-bazaar-backend.up.railway.app/cart/add-toCart`,
+          payload
+        )
         .then(function (response) {
           if (response.status == 201) {
             cartFetch();

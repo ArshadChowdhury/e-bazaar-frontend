@@ -23,12 +23,11 @@ export default function Home() {
 
   const productFetch = () => {
     axios
-      .get(`/products/all-products`, {
+      .get(`https://e-bazaar-backend.up.railway.app/products/all-products`, {
         params: {
           search: searchParam,
           page: page,
         },
-        baseURL: process.env.NEXT_PUBLIC_BASE_URL,
       })
       .then((response: object) => setResponse(response))
       .catch((err) => console.warn(err));
@@ -36,14 +35,14 @@ export default function Home() {
 
   const cartFetch = () => {
     axios
-      .get(`/cart/all-cartItems`, { baseURL: process.env.NEXT_PUBLIC_BASE_URL })
+      .get(`https://e-bazaar-backend.up.railway.app/cart/all-cartItems`)
       .then((response: any) => setCartResponse(response))
       .catch((err) => console.warn(err));
   };
 
   useEffect(() => {
     axios
-      .get(`/products/all-products`, {
+      .get(`https://e-bazaar-backend.up.railway.app/products/all-products`, {
         params: {
           search: searchParam,
           page: page,
