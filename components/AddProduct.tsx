@@ -14,6 +14,8 @@ export default function AddProduct({ open, setOpen, productFetch }: any) {
   const [price, setPrice] = useState("");
   const [slug, setSlug] = useState("");
 
+  axios.defaults.baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+
   const input = {
     style: "border border-gray-300 px-4 py-2 rounded-lg outline-none",
   };
@@ -30,10 +32,7 @@ export default function AddProduct({ open, setOpen, productFetch }: any) {
       return alert("Product price should be in whole number");
 
     axios
-      .post(`/products/create-product`, {
-        baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-        payload: payload,
-      })
+      .post(`/products/create-product`, payload)
       .then(function (response) {
         if (response.status == 201) {
           productFetch();

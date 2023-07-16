@@ -5,6 +5,9 @@ import { toast } from "react-hot-toast";
 
 export default function ProductCard({ product, cartResponse, cartFetch }: any) {
   const foundProductNamesAndId: any = [];
+
+  axios.defaults.baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+
   cartResponse.data?.map((cartItem: any) => {
     foundProductNamesAndId.push({
       name: cartItem.name,
@@ -24,7 +27,6 @@ export default function ProductCard({ product, cartResponse, cartFetch }: any) {
       return axios
         .patch(`/cart/edit/${found.id}`, {
           quantity: found.quantity > 0 ? parseInt(found.quantity) - 1 : null,
-          baseURL: process.env.NEXT_PUBLIC_BASE_URL,
         })
         .then(function (response) {
           if (response.status == 200) {
@@ -38,9 +40,7 @@ export default function ProductCard({ product, cartResponse, cartFetch }: any) {
         });
     } else {
       return axios
-        .delete(`/cart/delete/${found.id}`, {
-          baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-        })
+        .delete(`/cart/delete/${found.id}`)
         .then(function (response) {
           if (response.status == 200) {
             cartFetch();
@@ -59,7 +59,6 @@ export default function ProductCard({ product, cartResponse, cartFetch }: any) {
       return axios
         .patch(`/cart/edit/${found.id}`, {
           quantity: parseInt(found.quantity) + 1,
-          baseURL: process.env.NEXT_PUBLIC_BASE_URL,
         })
         .then(function (response) {
           if (response.status == 200) {
@@ -89,7 +88,6 @@ export default function ProductCard({ product, cartResponse, cartFetch }: any) {
       return axios
         .patch(`/cart/edit/${found.id}`, {
           quantity: parseInt(found.quantity) + 1,
-          baseURL: process.env.NEXT_PUBLIC_BASE_URL,
         })
         .then(function (response) {
           if (response.status == 200) {
@@ -103,10 +101,7 @@ export default function ProductCard({ product, cartResponse, cartFetch }: any) {
         });
     } else {
       return axios
-        .post(`/cart/add-toCart`, {
-          payload: payload,
-          baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-        })
+        .post(`/cart/add-toCart`, payload)
         .then(function (response) {
           if (response.status == 201) {
             cartFetch();
