@@ -1,16 +1,25 @@
 import Image from "next/image";
-import { XMarkIcon, TrashIcon } from "@heroicons/react/24/outline";
-import CartDrawer from "./CartDrawer";
+
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { XMarkIcon, TrashIcon } from "@heroicons/react/24/outline";
+
+import CartDrawer from "./CartDrawer";
 import EmptyState from "./EmptyState";
+
+type Props = {
+  cartOpen: boolean;
+  setCartOpen: any;
+  cartData: any;
+  cartFetch: any;
+};
 
 export default function Cart({
   cartOpen,
   setCartOpen,
   cartData,
   cartFetch,
-}: any) {
+}: Props) {
   const handleCartDelete = (uid: string) => {
     const confirmed = window.confirm(
       "Are you you want to delete this from Cart ?"
@@ -83,8 +92,9 @@ export default function Cart({
                 </div>
               </div>
             ))
-          ) : (<div className="h-96 flex justify-center items-center">
-            <EmptyState message={"No items are added in the cart"} />
+          ) : (
+            <div className="h-96 flex justify-center items-center">
+              <EmptyState message={"No items are added in the cart"} />
             </div>
           )}
         </div>

@@ -1,6 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 
+
 const AddProductModal = (props: any) => {
   return (
     <Transition.Root show={props.open} as={Fragment}>

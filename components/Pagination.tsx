@@ -1,7 +1,15 @@
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 
-export default function Pagination({ setPage, dataCount, page }: any) {
+type Props = {
+  setPage: any;
+  dataCount: number;
+  page: number;
+};
+
+export default function Pagination({ setPage, dataCount, page }: Props) {
+  
   const totalPages = Math.ceil(dataCount / 8);
+
   const handlePageChange = (pageNumber: number) => {
     if (pageNumber > 0 && pageNumber <= totalPages) {
       setPage(pageNumber);
@@ -33,12 +41,11 @@ export default function Pagination({ setPage, dataCount, page }: any) {
     });
   };
 
-
   return (
     <>
       <div className="hidden lg:flex justify-center flex-wrap gap-4 rounded-md">
         <button
-          className={`py-1 px-4 rounded-lg bg-gray-300 ${
+          className={`flex items-center gap-2 py-1 px-4 rounded-lg bg-gray-300 ${
             page !== 1
               ? "hover:text-dark-white hover:bg-gray-500 border border-dark-gray"
               : "cursor-not-allowed"
@@ -46,19 +53,19 @@ export default function Pagination({ setPage, dataCount, page }: any) {
           onClick={() => handlePageChange(page - 1)}
           disabled={page === 1}
         >
-          Previous
+          <ArrowLeftIcon className="w-5" /> Previous
         </button>
         {getPageNumbers()}
         <button
           onClick={() => handlePageChange(page + 1)}
-          className={`py-1 px-4 rounded-lg bg-gray-300 ${
+          className={`flex items-center gap-2 py-1 px-4 rounded-lg bg-gray-300 ${
             page !== totalPages
               ? "hover:text-dark-white hover:bg-gray-500 border border-dark-gray"
               : "cursor-not-allowed"
           }`}
           disabled={page === totalPages}
         >
-          Next
+          Next <ArrowRightIcon className="w-5" />
         </button>
       </div>
       <div className="flex lg:hidden justify-center flex-wrap gap-1 rounded-md mx-4">

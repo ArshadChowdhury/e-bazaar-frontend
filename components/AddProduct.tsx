@@ -1,9 +1,11 @@
-import AddProductModal from "./AddProductModal";
-import { XMarkIcon } from "@heroicons/react/24/outline";
-import axios from "axios";
 import { useState } from "react";
+
+import axios from "axios";
 import slugify from "slugify";
 import { toast } from "react-hot-toast";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+
+import AddProductModal from "./AddProductModal";
 
 export default function AddProduct({ open, setOpen, productFetch }: any) {
   const [productName, setProductName] = useState("");
@@ -26,10 +28,6 @@ export default function AddProduct({ open, setOpen, productFetch }: any) {
     if (payload.price == "") return alert("Product price is required");
     if (payload.price != parseInt(payload.price))
       return alert("Product price should be in whole number");
-    if (payload.discount_startDate == "")
-      return alert("Product discount start date is required");
-    if (payload.discount_endDate == "")
-      return alert("Product discount end date is required");
 
     axios
       .post("http://localhost:3000/products/create-product", payload)

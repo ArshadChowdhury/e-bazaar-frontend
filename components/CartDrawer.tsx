@@ -1,10 +1,15 @@
-import { Fragment } from "react";
+import { Fragment, ReactNode } from "react";
 
 import { Dialog, Transition } from "@headlessui/react";
 
-import { XMarkIcon } from "@heroicons/react/24/outline";
 
-function CartDrawer({ open, setOpen, children, ...props }: any) {
+type Props = {
+  open: boolean;
+  setOpen: any;
+  children: ReactNode;
+};
+
+function CartDrawer({ open, setOpen, children }: Props) {
   return (
     <>
       <Transition.Root show={open} as={Fragment}>

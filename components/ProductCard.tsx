@@ -1,6 +1,8 @@
 import Image from "next/image";
+
 import axios from "axios";
 import { toast } from "react-hot-toast";
+
 
 export default function ProductCard({ product, cartResponse, cartFetch }: any) {
   const foundProductNamesAndId: any = [];
@@ -72,7 +74,11 @@ export default function ProductCard({ product, cartResponse, cartFetch }: any) {
   const handleAddToCart = (product: any) => {
     const payload = {
       name: product.name,
-      price: product.price,
+      price: hasDiscount
+        ? Math.ceil(
+            parseInt(product.price) - (parseInt(product.price) * 25) / 100
+          )
+        : product.price,
       quantity: 1,
     };
 

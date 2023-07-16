@@ -1,7 +1,10 @@
-import React from "react";
 import Image from "next/image";
 
-const EmptyState = ({message}) => {
+type Props = {
+  message: string;
+};
+
+const EmptyState = ({ message }: Props) => {
   return (
     <div className="flex flex-col justify-center items-center">
       <Image

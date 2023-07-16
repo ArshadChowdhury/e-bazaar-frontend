@@ -1,4 +1,3 @@
-import React from "react";
 import Image from "next/image";
 
 type Props = {
@@ -11,7 +10,7 @@ const InfoCard = ({ imageSrc, title, description }: Props) => {
   return (
     <div className="bg-gradient-to-r from-dark-sky to-mixed-sky rounded-lg relative md:basis-[420px]">
       <div className="before:bg-card-background before:opacity-[.03] before:absolute before:bg-cover before:inset-0">
-        <div className="md:mx-5 md:my-[18px] m-4 py-4">
+        <div className="md:mx-8 md:my-[18px] mx-6 my-4 py-4">
           <div className="bg-white inline-block p-2 rounded-lg">
             <Image src={imageSrc} height={32} width={32} alt="" />
           </div>

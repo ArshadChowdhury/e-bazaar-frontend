@@ -1,29 +1,18 @@
 "use client";
 
-import InfoCard from "@/components/InfoCard";
 import Image from "next/image";
-import { PlusCircleIcon } from "@heroicons/react/24/outline";
-import axios from "axios";
 import { useState, useEffect } from "react";
-import ProductCard from "@/components/ProductCard";
-import EmptyState from "@/components/EmptyState";
-import Cart from "@/components/Cart";
+
+import axios from "axios";
+import { PlusCircleIcon } from "@heroicons/react/24/outline";
+
 import AddProduct from "@/components/AddProduct";
+import Cart from "@/components/Cart";
+import EmptyState from "@/components/EmptyState";
+import InfoCard from "@/components/InfoCard";
+import ProductCard from "@/components/ProductCard";
 import Pagination from "@/components/Pagination";
 
-// axios
-//   .get("http://localhost:3000/products/all-products")
-//   .then(function (response) {
-//     // handle success
-//     console.log(response);
-//   })
-//   .catch(function (error) {
-//     // handle error
-//     console.log(error);
-//   })
-//   .finally(function () {
-//     // always executed
-//   });
 
 export default function Home() {
   const [open, setOpen] = useState(false);
@@ -70,9 +59,10 @@ export default function Home() {
 
   return (
     <>
-      <header className="md:border-b border-light-gray">
+      <header className="md:border-b border-light-gray mx-4 lg:mx-0">
         <nav className="max-w-7xl md:mx-auto mx-4 flex justify-between my-8">
           <Image
+          className="md:w-44 md:h-10 w-32 h-8 object-contain"
             src="/logo/logo-original.png"
             height={40}
             width={170}
@@ -80,11 +70,11 @@ export default function Home() {
           />
           <button
             onClick={() => setCartOpen(true)}
-            className="relative border border-light-gray px-2 md:px-6 md:py-2 rounded-md flex items-center gap-3 font-medium text-sm md:text-base"
+            className="relative border border-light-gray px-3 py-1 md:px-6 md:py-2 rounded-md flex items-center gap-3 font-medium text-sm md:text-base"
           >
             {cartResponse.data?.length > 0 && (
               <Image
-                className="absolute top-1 left-[18px] sm:top-[2px] sm:left-[34px]"
+                className="absolute top-[1px] left-[21px] sm:top-[2px] sm:left-[34px]"
                 src="/assets/cart-counter-icon.png"
                 height={16}
                 width={16}
@@ -108,13 +98,13 @@ export default function Home() {
           <InfoCard
             imageSrc={"/assets/product.png"}
             title={`Total Product : ${
-              response.data?.dataCount > 0
-                ? response.data?.dataCount
+              response.data?.totalProducts > 0
+                ? response.data?.totalProducts
                 : "0"
             }`}
             description={`Warehouse has total of ${
-              response.data?.dataCount > 0
-                ? response.data?.dataCount
+              response.data?.totalProducts > 0
+                ? response.data?.totalProducts
                 : "0"
             } product today & the max capacity is 200.`}
           />
@@ -128,8 +118,8 @@ export default function Home() {
           <InfoCard
             imageSrc={"/assets/unique.png"}
             title={`Unique Product : ${
-              response.data?.dataCount > 0
-                ? response.data?.dataCount
+              response.data?.totalProducts > 0
+                ? response.data?.totalProducts
                 : "0"
             }`}
             description={
@@ -138,13 +128,13 @@ export default function Home() {
           />
         </section>
 
-        <section className="flex flex-col-reverse md:flex-row gap-6 relative">
+        <section className="flex flex-col-reverse lg:flex-row gap-6 relative">
           <input
             onChange={(event) => setSearchParam(event.target.value)}
             className="w-full lg:w-11/12 bg-light-white border border-light-gray rounded-md text-sm p-3 outline-none"
           />
           <Image
-            className="absolute md:top-4 md:right-[240px] right-4 top-[90px]"
+            className="absolute lg:top-4 lg:right-[240px] right-4 top-[90px]"
             height={16}
             width={16}
             src={"/assets/search-icon.png"}
@@ -171,7 +161,7 @@ export default function Home() {
         <section className="text-2xl font-medium">
           <h3 className="my-4">
             Showing {response.data?.results?.length} of{" "}
-            {response.data?.dataCount} results
+            {response.data?.totalProducts} results
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {response.data?.results?.length > 0 &&
@@ -194,7 +184,7 @@ export default function Home() {
             <Pagination
               setPage={setPage}
               page={page}
-              dataCount={response.data?.dataCount}
+              dataCount={response.data?.totalProducts}
             />
           )}
         </aside>
