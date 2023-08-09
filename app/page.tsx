@@ -69,7 +69,7 @@ export default function Home() {
             onClick={() => setCartOpen(true)}
             className="relative border border-light-gray px-3 py-1 md:px-6 md:py-2 rounded-md flex items-center gap-3 font-medium text-sm md:text-base"
           >
-            {cartData.length > 0 && (
+            {cartData?.length > 0 && (
               <Image
                 className="absolute top-[1px] left-[21px] sm:top-[2px] sm:left-[34px]"
                 src="/assets/cart-counter-icon.png"
@@ -84,7 +84,7 @@ export default function Home() {
               width={22}
               alt="cart-icon"
             />
-            Cart {cartData.length > 0 && `(${cartData.length})`}
+            Cart {cartData?.length > 0 && `(${cartData?.length})`}
           </button>
         </nav>
       </header>

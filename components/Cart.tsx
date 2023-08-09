@@ -49,9 +49,11 @@ export default function Cart({
   };
 
   const allCartItems: any = [];
-  cartData.data?.map((cartItem: any) =>
+  cartData?.map((cartItem: any) =>
     allCartItems.push(parseInt(cartItem.price) * cartItem.quantity)
   );
+  console.log(allCartItems);
+
   const subTotal = allCartItems.reduce(
     (accumulator: any, currentValue: any) => accumulator + currentValue,
     0
