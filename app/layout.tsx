@@ -1,11 +1,11 @@
+import React from "react";
 import type { Metadata } from "next";
 
 import { Toaster } from "react-hot-toast";
 import { Inter } from "next/font/google";
+import Providers from "./providers";
 
 import "./globals.css";
-
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,16 +19,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const queryClient = new QueryClient();
-
   return (
     <html lang="en">
-      <QueryClientProvider client={queryClient}>
-        <body className={inter.className}>
-          <Toaster />
-          {children}
-        </body>
-      </QueryClientProvider>
+      <body className={inter.className}>
+        <Toaster />
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
