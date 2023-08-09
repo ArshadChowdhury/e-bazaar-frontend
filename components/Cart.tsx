@@ -9,17 +9,17 @@ import CartDrawer from "./CartDrawer";
 import EmptyState from "./EmptyState";
 
 type Props = {
-  cartOpen: boolean;
+  cartOpen: any;
   setCartOpen: any;
   cartData: any;
-  cartFetch: any;
+  cartRefetch: any;
 };
 
 export default function Cart({
   cartOpen,
   setCartOpen,
   cartData,
-  cartFetch,
+  cartRefetch,
 }: Props) {
   const handleCartDelete = (uid: string) => {
     const confirmed = window.confirm(
@@ -28,7 +28,7 @@ export default function Cart({
 
     if (confirmed) {
       const handleSuccess = () => {
-        cartFetch();
+        cartRefetch();
       };
 
       const handleFailure = (error: Object) => {
@@ -68,8 +68,8 @@ export default function Cart({
               className="w-6 md:w-10 cursor-pointer"
             />
           </div>
-          {cartData.data?.length > 0 ? (
-            cartData.data?.map((cartItem: any, index: number) => (
+          {cartData?.length > 0 ? (
+            cartData?.map((cartItem: any, index: number) => (
               <div className="flex flex-col gap-4" key={index}>
                 <div className="flex justify-between py-4 border-b-2 border-dashed border-light-gray">
                   <div className="flex gap-4">

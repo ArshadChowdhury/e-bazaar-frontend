@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 
-import axios from "axios";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
 
@@ -21,14 +20,15 @@ export default function Home() {
   const [page, setPage] = useState(1);
   const [searchParam, setSearchParam] = useState("");
   const [cartOpen, setCartOpen] = useState(false);
-  const [cartResponse, setCartResponse] = useState<any>([]);
 
   const fetch = () => {
-    const params = {
+    const sanitizedParams = {
       ...(searchParam && { search: searchParam }),
       ...(page > 1 && { page: page }),
     };
-    return APIKit.products.getAllProducts(params).then(({ data }) => data);
+    return APIKit.products
+      .getAllProducts(sanitizedParams)
+      .then(({ data }) => data);
   };
 
   const {
@@ -41,47 +41,10 @@ export default function Home() {
     queryFn: fetch,
   });
 
-  // const productFetch = () => {
-  //   axios
-  //     .get(`${process.env.NEXT_PUBLIC_API_URL}/products/all-products`, {
-  //       params: {
-  //         search: searchParam,
-  //         page: page,
-  //       },
-  //     })
-  //     .then((response: object) => setResponse(response))
-  //     .catch((err) => console.warn(err));
-  // };
-
-  // const {
-  //   isLoading: cartLoading,
-  //   isError: cartError,
-  //   data: cartData,
-  //   refetch: cartRefetch,
-  // } = useQuery({
-  //   queryKey: ["/all-cart"],
-  //   queryFn: APIKit.cart.getAllCartProducts().then(({ data }) => data),
-  // });
-
-  const cartFetch = () => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_API_URL}/cart/all-cartItems`)
-      .then((response: any) => setCartResponse(response))
-      .catch((err) => console.warn(err));
-  };
-
-  // useEffect(() => {
-  //   axios
-  //     .get(`/products/all-products`, {
-  //       params: {
-  //         search: searchParam,
-  //         page: page,
-  //       },
-  //       baseURL: process.env.NEXT_PUBLIC_API_URL,
-  //     })
-  //     .then((response: object) => setResponse(response))
-  //     .catch((err) => console.warn(err));
-  // }, [searchParam, page]);
+  const { data: cartData, refetch: cartRefetch } = useQuery({
+    queryKey: ["/all-cart"],
+    queryFn: () => APIKit.cart.getAllCartProducts().then(({ data }) => data),
+  });
 
   useEffect(() => {
     refetch();
@@ -106,7 +69,7 @@ export default function Home() {
             onClick={() => setCartOpen(true)}
             className="relative border border-light-gray px-3 py-1 md:px-6 md:py-2 rounded-md flex items-center gap-3 font-medium text-sm md:text-base"
           >
-            {cartResponse.data?.length > 0 && (
+            {cartData.length > 0 && (
               <Image
                 className="absolute top-[1px] left-[21px] sm:top-[2px] sm:left-[34px]"
                 src="/assets/cart-counter-icon.png"
@@ -121,8 +84,7 @@ export default function Home() {
               width={22}
               alt="cart-icon"
             />
-            Cart{" "}
-            {cartResponse.data?.length > 0 && `(${cartResponse.data.length})`}
+            Cart {cartData.length > 0 && `(${cartData.length})`}
           </button>
         </nav>
       </header>
@@ -182,8 +144,8 @@ export default function Home() {
         <Cart
           cartOpen={cartOpen}
           setCartOpen={setCartOpen}
-          cartData={cartResponse}
-          cartFetch={cartFetch}
+          cartData={cartData}
+          cartRefetch={cartRefetch}
         />
 
         <section className="text-2xl font-medium">
@@ -193,12 +155,12 @@ export default function Home() {
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {productData?.results?.length > 0 &&
-              productData?.results.map((product: [], index: number) => (
+              productData?.results.map((product: object, index: number) => (
                 <ProductCard
                   key={index}
                   product={product}
-                  cartFetch={cartFetch}
-                  cartResponse={cartResponse}
+                  cartReFetch={cartRefetch}
+                  cartResponse={cartData}
                 />
               ))}
           </div>

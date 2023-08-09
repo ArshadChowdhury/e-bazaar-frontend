@@ -1,12 +1,17 @@
 import Image from "next/image";
 
-import axios from "axios";
 import { toast } from "react-hot-toast";
 
-export default function ProductCard({ product, cartResponse, cartFetch }: any) {
+import APIKit from "@/common/APIKit";
+
+export default function ProductCard({
+  product,
+  cartResponse,
+  cartReFetch,
+}: any) {
   const foundProductNamesAndId: any = [];
 
-  cartResponse.data?.map((cartItem: any) => {
+  cartResponse?.map((cartItem: any) => {
     foundProductNamesAndId.push({
       name: cartItem.name,
       id: cartItem._id,
@@ -22,60 +27,70 @@ export default function ProductCard({ product, cartResponse, cartFetch }: any) {
 
   const handleDeleteFromCart = (found: any) => {
     if (found.quantity > 1) {
-      return axios
-        .patch(
-          `https://e-bazaar-backend.up.railway.app/cart/edit/${found.id}`,
-          {
-            quantity: found.quantity > 0 ? parseInt(found.quantity) - 1 : null,
-          }
-        )
-        .then(function (response) {
-          if (response.status == 200) {
-            cartFetch();
-            return toast.success("Quantity updated in cart");
-          }
-          return toast.error("Quantity was not updated to cart");
+      const handleSuccess = () => {
+        cartReFetch();
+      };
+
+      const handleFailure = (error: Object) => {
+        console.log(error);
+      };
+
+      const promise = APIKit.cart
+        .editCartProductQuantity(found.id, {
+          quantity: found.quantity > 0 ? parseInt(found.quantity) - 1 : null,
         })
-        .catch(function (error) {
-          console.log(error);
-        });
+        .then(handleSuccess)
+        .catch(handleFailure);
+
+      return toast.promise(promise, {
+        loading: "Updating product in cart...",
+        success: "Quantity updated in cart",
+        error: "Quantity wasn't updated to cart",
+      });
     } else {
-      return axios
-        .delete(
-          `https://e-bazaar-backend.up.railway.app/cart/delete/${found.id}`
-        )
-        .then(function (response) {
-          if (response.status == 200) {
-            cartFetch();
-            return toast.success("Product deleted from cart");
-          }
-          return toast.error("Product deletion failed");
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      const handleSuccess = () => {
+        cartReFetch();
+      };
+
+      const handleFailure = (error: Object) => {
+        console.log(error);
+      };
+
+      const promise = APIKit.cart
+        .deleteCartProduct(found.id)
+        .then(handleSuccess)
+        .catch(handleFailure);
+
+      return toast.promise(promise, {
+        loading: "Deleting product from cart...",
+        success: "Product deleted from cart",
+        error: "Product deletion failed",
+      });
     }
   };
 
   const handleIncreaseInCart = (found: any) => {
     if (found) {
-      return axios
-        .patch(
-          `https://e-bazaar-backend.up.railway.app/cart/edit/${found.id}`,
-          {
-            quantity: parseInt(found.quantity) + 1,
-          }
-        )
-        .then(function (response) {
-          if (response.status == 200) {
-            cartFetch();
-            return toast.success("Quantity updated in cart");
-          }
-          return toast.error("Quantity was not updated to cart");
+      const handleSuccess = () => {
+        cartReFetch();
+      };
+
+      const handleFailure = (error: Object) => {
+        console.log(error);
+      };
+
+      const promise = APIKit.cart
+        .editCartProductQuantity(found.id, {
+          quantity: parseInt(found.quantity) + 1,
         })
-        .catch(function (error) {
-          console.log(error);
-        });
+        .then(handleSuccess)
+        .catch(handleFailure);
+
+      return toast.promise(promise, {
+        loading: "Updating product in cart...",
+        success: "Quantity updated in cart",
+        error: "Quantity wasn't updated to cart",
+      });
     }
   };
 
@@ -91,39 +106,45 @@ export default function ProductCard({ product, cartResponse, cartFetch }: any) {
     };
 
     if (found) {
-      return axios
-        .patch(
-          `https://e-bazaar-backend.up.railway.app/cart/edit/${found.id}`,
-          {
-            quantity: parseInt(found.quantity) + 1,
-          }
-        )
-        .then(function (response) {
-          if (response.status == 200) {
-            cartFetch();
-            return toast.success("Quantity updated in cart");
-          }
-          return toast.error("Quantity was not updated to cart");
+      const handleSuccess = () => {
+        cartReFetch();
+      };
+
+      const handleFailure = (error: Object) => {
+        console.log(error);
+      };
+
+      const promise = APIKit.cart
+        .editCartProductQuantity(found.id, {
+          quantity: parseInt(found.quantity) + 1,
         })
-        .catch(function (error) {
-          console.log(error);
-        });
+        .then(handleSuccess)
+        .catch(handleFailure);
+
+      return toast.promise(promise, {
+        loading: "Updating product in cart...",
+        success: "Quantity updated in cart",
+        error: "Quantity wasn't updated to cart",
+      });
     } else {
-      return axios
-        .post(
-          `https://e-bazaar-backend.up.railway.app/cart/add-toCart`,
-          payload
-        )
-        .then(function (response) {
-          if (response.status == 201) {
-            cartFetch();
-            return toast.success("Product added to cart");
-          }
-          return toast.error("Product was not added to cart");
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      const handleSuccess = () => {
+        cartReFetch();
+      };
+
+      const handleFailure = (error: Object) => {
+        console.log(error);
+      };
+
+      const promise = APIKit.cart
+        .addProductInCart(payload)
+        .then(handleSuccess)
+        .catch(handleFailure);
+
+      return toast.promise(promise, {
+        loading: "Adding product in cart...",
+        success: "Product added to cart",
+        error: "Product wasn't added to cart",
+      });
     }
   };
 

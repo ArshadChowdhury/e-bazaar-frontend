@@ -20,6 +20,14 @@ const APIKit = {
       const url = `cart/delete/${uid}`;
       return request.delete(url);
     },
+    editCartProductQuantity: (uid, payload) => {
+      const url = `cart/edit/${uid}`;
+      return request.patch(url, payload);
+    },
+    addProductInCart: (payload) => {
+      const url = "cart/add-toCart";
+      return request.post(url, payload);
+    },
   },
 };
 
