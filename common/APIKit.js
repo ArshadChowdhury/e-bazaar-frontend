@@ -1,4 +1,4 @@
-import HTTPKit, { request } from "./HTTPKit";
+import { request } from "./HTTPKit";
 
 const APIKit = {
   products: {
