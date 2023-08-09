@@ -120,7 +120,10 @@ export default function Home() {
 
         <section className="flex flex-col-reverse lg:flex-row gap-6 relative">
           <input
-            onChange={(event) => setSearchParam(event.target.value)}
+            onChange={(event) => {
+              setSearchParam(event.target.value);
+              setPage(1);
+            }}
             className="w-full lg:w-11/12 bg-light-white border border-light-gray rounded-md text-sm p-3 outline-none"
           />
           <Image
