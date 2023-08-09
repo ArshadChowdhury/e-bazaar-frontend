@@ -1,8 +1,9 @@
 import Image from "next/image";
 
-import axios from "axios";
 import { toast } from "react-hot-toast";
 import { XMarkIcon, TrashIcon } from "@heroicons/react/24/outline";
+
+import APIKit from "@/common/APIKit";
 
 import CartDrawer from "./CartDrawer";
 import EmptyState from "./EmptyState";
@@ -26,20 +27,27 @@ export default function Cart({
     );
 
     if (confirmed) {
-      axios
-        .delete(`https://e-bazaar-backend.up.railway.app/cart/delete/${uid}`)
-        .then(function (response) {
-          if (response.status == 200) {
-            cartFetch();
-            return toast.success("Product deleted from cart");
-          }
-          return toast.error("Product deletion failed");
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      const handleSuccess = () => {
+        cartFetch();
+      };
+
+      const handleFailure = (error: Object) => {
+        console.log(error);
+      };
+
+      const promise = APIKit.cart
+        .deleteCartProduct(uid)
+        .then(handleSuccess)
+        .catch(handleFailure);
+
+      return toast.promise(promise, {
+        loading: "Deleting product...",
+        success: "Product deleted from cart",
+        error: "Product deletion failed",
+      });
     }
   };
+
   const allCartItems: any = [];
   cartData.data?.map((cartItem: any) =>
     allCartItems.push(parseInt(cartItem.price) * cartItem.quantity)

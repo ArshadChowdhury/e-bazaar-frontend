@@ -5,6 +5,9 @@ import { useState, useEffect } from "react";
 
 import axios from "axios";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import { useQuery } from "@tanstack/react-query";
+
+import APIKit from "../common/APIKit";
 
 import AddProduct from "@/components/AddProduct";
 import Cart from "@/components/Cart";
@@ -18,44 +21,75 @@ export default function Home() {
   const [page, setPage] = useState(1);
   const [searchParam, setSearchParam] = useState("");
   const [cartOpen, setCartOpen] = useState(false);
-  const [response, setResponse] = useState<any>([]);
   const [cartResponse, setCartResponse] = useState<any>([]);
 
-  const productFetch = () => {
-    axios
-      .get(`https://e-bazaar-backend.up.railway.app/products/all-products`, {
-        params: {
-          search: searchParam,
-          page: page,
-        },
-      })
-      .then((response: object) => setResponse(response))
-      .catch((err) => console.warn(err));
+  const fetch = () => {
+    const params = {
+      ...(searchParam && { search: searchParam }),
+      ...(page > 1 && { page: page }),
+    };
+    return APIKit.products.getAllProducts(params).then(({ data }) => data);
   };
+
+  const {
+    isLoading,
+    isError,
+    data: productData,
+    refetch,
+  } = useQuery({
+    queryKey: ["/all-products"],
+    queryFn: fetch,
+  });
+
+  // const productFetch = () => {
+  //   axios
+  //     .get(`${process.env.NEXT_PUBLIC_API_URL}/products/all-products`, {
+  //       params: {
+  //         search: searchParam,
+  //         page: page,
+  //       },
+  //     })
+  //     .then((response: object) => setResponse(response))
+  //     .catch((err) => console.warn(err));
+  // };
+
+  // const {
+  //   isLoading: cartLoading,
+  //   isError: cartError,
+  //   data: cartData,
+  //   refetch: cartRefetch,
+  // } = useQuery({
+  //   queryKey: ["/all-cart"],
+  //   queryFn: APIKit.cart.getAllCartProducts().then(({ data }) => data),
+  // });
 
   const cartFetch = () => {
     axios
-      .get(`https://e-bazaar-backend.up.railway.app/cart/all-cartItems`)
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/cart/all-cartItems`)
       .then((response: any) => setCartResponse(response))
       .catch((err) => console.warn(err));
   };
 
-  useEffect(() => {
-    axios
-      .get(`https://e-bazaar-backend.up.railway.app/products/all-products`, {
-        params: {
-          search: searchParam,
-          page: page,
-        },
-        baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-      })
-      .then((response: object) => setResponse(response))
-      .catch((err) => console.warn(err));
-  }, [searchParam, page]);
+  // useEffect(() => {
+  //   axios
+  //     .get(`/products/all-products`, {
+  //       params: {
+  //         search: searchParam,
+  //         page: page,
+  //       },
+  //       baseURL: process.env.NEXT_PUBLIC_API_URL,
+  //     })
+  //     .then((response: object) => setResponse(response))
+  //     .catch((err) => console.warn(err));
+  // }, [searchParam, page]);
 
   useEffect(() => {
-    cartFetch();
-  }, []);
+    refetch();
+  }, [searchParam, page]);
+
+  if (isLoading) return <p className="text-center">Loading...</p>;
+
+  if (isError) return <p className="text-center">Error...</p>;
 
   return (
     <>
@@ -98,14 +132,10 @@ export default function Home() {
           <InfoCard
             imageSrc={"/assets/product.png"}
             title={`Total Product : ${
-              response.data?.totalProducts > 0
-                ? response.data?.totalProducts
-                : "0"
+              productData?.totalProducts > 0 ? productData?.totalProducts : "0"
             }`}
             description={`Warehouse has total of ${
-              response.data?.totalProducts > 0
-                ? response.data?.totalProducts
-                : "0"
+              productData?.totalProducts > 0 ? productData?.totalProducts : "0"
             } product today & the max capacity is 200.`}
           />
           <InfoCard
@@ -118,9 +148,7 @@ export default function Home() {
           <InfoCard
             imageSrc={"/assets/unique.png"}
             title={`Unique Product : ${
-              response.data?.totalProducts > 0
-                ? response.data?.totalProducts
-                : "0"
+              productData?.totalProducts > 0 ? productData?.totalProducts : "0"
             }`}
             description={
               "Total number of products that are not duplicate or redundant."
@@ -141,7 +169,7 @@ export default function Home() {
             alt=""
           />
           <button
-            onClick={() => setOpen(!open)}
+            onClick={() => setOpen(true)}
             className="w-full lg:w-1/6 border border-dark-sky rounded-md px-6 py-3 text-dark-sky font-medium flex justify-center items-center gap-2"
           >
             <PlusCircleIcon className="w-6" />
@@ -149,7 +177,7 @@ export default function Home() {
           </button>
         </section>
 
-        <AddProduct open={open} setOpen={setOpen} productFetch={productFetch} />
+        <AddProduct open={open} setOpen={setOpen} data={productData} />
 
         <Cart
           cartOpen={cartOpen}
@@ -160,12 +188,12 @@ export default function Home() {
 
         <section className="text-2xl font-medium">
           <h3 className="my-4">
-            Showing {response.data?.results?.length} of{" "}
-            {response.data?.totalProducts} results
+            Showing {productData?.results?.length} of{" "}
+            {productData?.totalProducts} results
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {response.data?.results?.length > 0 &&
-              response.data?.results.map((product: [], index: number) => (
+            {productData?.results?.length > 0 &&
+              productData?.results.map((product: [], index: number) => (
                 <ProductCard
                   key={index}
                   product={product}
@@ -174,17 +202,17 @@ export default function Home() {
                 />
               ))}
           </div>
-          {response.data?.results.length <= 0 && (
+          {productData?.results.length <= 0 && (
             <EmptyState message={"Sorry we found no product with that name"} />
           )}
         </section>
 
         <aside className="py-6 flex sm:justify-end justify-center">
-          {response.data?.results.length > 0 && (
+          {productData.results.length > 0 && (
             <Pagination
               setPage={setPage}
               page={page}
-              dataCount={response.data?.totalProducts}
+              dataCount={productData.totalProducts}
             />
           )}
         </aside>

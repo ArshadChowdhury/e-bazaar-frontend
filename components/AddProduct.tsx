@@ -1,13 +1,14 @@
 import { useState } from "react";
 
-import axios from "axios";
 import slugify from "slugify";
 import { toast } from "react-hot-toast";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
+import APIKit from "@/common/APIKit";
+
 import AddProductModal from "./AddProductModal";
 
-export default function AddProduct({ open, setOpen, productFetch }: any) {
+export default function AddProduct({ open, setOpen }: any) {
   const [productName, setProductName] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -23,33 +24,35 @@ export default function AddProduct({ open, setOpen, productFetch }: any) {
   };
 
   const handleAddProduct = (payload: any) => {
-    if (payload.name == "") return alert("Product name is required");
-    if (payload.slug == "") return alert("Product slug is required");
-    if (payload.price == "") return alert("Product price is required");
+    if (payload.name === "") return alert("Product name is required");
+    if (payload.slug === "") return alert("Product slug is required");
+    if (payload.price === "") return alert("Product price is required");
     if (payload.price != parseInt(payload.price))
       return alert("Product price should be in whole number");
 
-    axios
-      .post(
-        `https://e-bazaar-backend.up.railway.app/products/create-product`,
-        payload
-      )
-      .then(function (response) {
-        if (response.status == 201) {
-          productFetch();
-          setOpen(false);
-          setStartDate("");
-          setEndDate("");
-          setPrice("");
-          setSlug("");
-          setProductName("");
-          return toast.success("Product added to collection");
-        }
-        return toast.error("Product adding failed");
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    const handleSuccess = () => {
+      setOpen(false);
+      setStartDate("");
+      setEndDate("");
+      setPrice("");
+      setSlug("");
+      setProductName("");
+    };
+
+    const handleFailure = (error: Object) => {
+      console.log(error);
+    };
+
+    const promise = APIKit.products
+      .createProduct(payload)
+      .then(handleSuccess)
+      .catch(handleFailure);
+
+    return toast.promise(promise, {
+      loading: "Adding product...",
+      success: "Product added to collection",
+      error: "Product adding failed",
+    });
   };
 
   const payload = {
