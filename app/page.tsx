@@ -21,14 +21,13 @@ export default function Home() {
   const [searchParam, setSearchParam] = useState("");
   const [cartOpen, setCartOpen] = useState(false);
 
-  const fetch = () => {
+  const fetch = async () => {
     const sanitizedParams = {
-      ...(searchParam && { search: searchParam }),
+      ...(searchParam.length > 0 && { search: searchParam }),
       ...(page > 1 && { page: page }),
     };
-    return APIKit.products
-      .getAllProducts(sanitizedParams)
-      .then(({ data }) => data);
+    const { data } = await APIKit.products.getAllProducts(sanitizedParams);
+    return data;
   };
 
   const {
@@ -57,7 +56,7 @@ export default function Home() {
   return (
     <>
       <header className="md:border-b border-light-gray mx-4 lg:mx-0">
-        <nav className="max-w-7xl md:mx-auto mx-4 flex justify-between my-8">
+        <nav className="max-w-7xl xl:mx-auto mx-4 flex justify-between my-8">
           <Image
             className="md:w-44 md:h-10 w-32 h-8 object-contain"
             src="/logo/logo-original.png"
@@ -71,7 +70,7 @@ export default function Home() {
           >
             {cartData?.length > 0 && (
               <Image
-                className="absolute top-[1px] left-[21px] sm:top-[2px] sm:left-[34px]"
+                className="absolute top-[1px] left-[22px] md:top-[3px] md:left-[34px]"
                 src="/assets/cart-counter-icon.png"
                 height={16}
                 width={16}
@@ -89,7 +88,7 @@ export default function Home() {
         </nav>
       </header>
 
-      <main className="flex flex-col max-w-7xl lg:mx-auto mx-4">
+      <main className="flex flex-col max-w-7xl xl:mx-auto mx-4">
         <section className="my-6 flex flex-col md:flex-row gap-8">
           <InfoCard
             imageSrc={"/assets/product.png"}
