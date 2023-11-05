@@ -1,5 +1,6 @@
 
 # E-bazaar frontend
+
 ## Frontend of an e-commerce project to Add new products, Search products, Add/Edit quantity/Delete products from cart.
 
 ## Live app link - https://e-bazaar-by-arshad.netlify.app/
@@ -12,8 +13,8 @@
 
 ### Next.js with TypeScript 
 ### TailwindCSS
-### Nest.js with TypeScript(for backend)
-### MongoDB
+### Nest.js with TypeScript (for backend)
+### MongoDB (for backend)
 
 # Getting started locally - 
 
