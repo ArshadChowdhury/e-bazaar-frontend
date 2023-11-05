@@ -1,10 +1,19 @@
 
 # E-bazaar frontend
-## A small frontend e-commerce project to Add new products, Search products, Add/Edit quantity/Delete products from cart.
+## Frontend of an e-commerce project to Add new products, Search products, Add/Edit quantity/Delete products from cart.
 
 ## Live app link - https://e-bazaar-by-arshad.netlify.app/
 
-## ** Might have to try a few times to access the live link as the backend is hosted on render and render servers shut down if there's inactivity **
+## Here's a glimpse of this app -
+
+![image](https://github.com/ArshadChowdhury/e-bazaar-frontend/assets/86738490/02adf7a5-cb34-457f-900a-b10eb94aff86)
+
+## Tech Stack - 
+
+Next.js with TypeScript
+TailwindCSS
+Nest.js with TypeScript(for backend)
+MongoDB
 
 ## Getting started locally - 
 
