@@ -1,13 +1,14 @@
 
 # E-bazaar frontend
 
-Frontend of an e-commerce project to Add new products, Search products, Add/Edit quantity/Delete products from cart.
+Frontend of an e-commerce project to add products, search products, add/edit quantity/delete products from cart.
 
 ## Live app link - https://e-bazaar-by-arshad.netlify.app/
 
 ## Here's a glimpse of this app -
 
-![image](https://github.com/ArshadChowdhury/e-bazaar-frontend/assets/86738490/02adf7a5-cb34-457f-900a-b10eb94aff86)
+![image](https://github.com/ArshadChowdhury/e-bazaar-frontend/assets/86738490/d356b8ca-0190-47fd-badd-15b4927ee7cd)
+
 
 # Tech Stack - 
 
