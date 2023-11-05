@@ -1,6 +1,6 @@
 
 # E bazaar frontend
-## A small e-commerce project to Add new products, Search products, Add/Edit quantity/Delete products from cart.
+## A small e-commerce project frontend to Add new products, Search products, Add/Edit quantity/Delete products from cart.
 
 ## Live app link - https://e-bazaar-by-arshad.netlify.app/
 
