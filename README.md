@@ -11,10 +11,10 @@ Frontend of an e-commerce project to Add new products, Search products, Add/Edit
 
 # Tech Stack - 
 
-Next.js with TypeScript 
-TailwindCSS
-Nest.js with TypeScript (for backend)
-MongoDB (for backend)
+Next.js with TypeScript  <br>
+TailwindCSS <br>
+Nest.js with TypeScript (for backend) <br>
+MongoDB (for backend) <br>
 
 # Getting started locally - 
 
