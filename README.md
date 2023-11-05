@@ -10,10 +10,10 @@
 
 ## Tech Stack - 
 
-Next.js with TypeScript
-TailwindCSS
-Nest.js with TypeScript(for backend)
-MongoDB
+### Next.js with TypeScript
+### TailwindCSS
+### Nest.js with TypeScript(for backend)
+### MongoDB
 
 ## Getting started locally - 
 
