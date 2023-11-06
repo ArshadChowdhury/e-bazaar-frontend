@@ -12,20 +12,32 @@ Frontend of an e-commerce project to add products, search products, add/edit qua
 
 # Tech Stack - 
 
-Next.js with TypeScript  <br>
+Next.js with TypeScript <br>
 TailwindCSS <br>
 Nest.js with TypeScript (for backend) <br>
 MongoDB (for backend) <br>
 
 # Getting started locally - 
 
-First you'll need to clone this project, run ```npm install``` or ```yarn install``` and then run the development server by running
+First you'll need to clone this project by running
+
+```bash
+git clone https://github.com/ArshadChowdhury/e-bazaar-frontend.git
+```
+then change directory to ```e-bazaar-frontend``` folder then run
+
+```bash
+npm install``` or ```yarn install
+```
+and then run the development server by running
 
 ```bash
 npm run dev
 # or
 yarn dev
 ```
+
+You'll also need an env to connect to backend contact me on social media for that.
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
