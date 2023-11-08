@@ -3,12 +3,14 @@ import Image from "next/image";
 import { toast } from "react-hot-toast";
 
 import APIKit from "@/common/APIKit";
+import { useState } from "react";
 
 export default function ProductCard({
   product,
   cartResponse,
   cartReFetch,
 }: any) {
+  const [isLoading, setIsLoading] = useState(false);
   const foundProductNamesAndId: any = [];
 
   cartResponse?.map((cartItem: any) => {
@@ -26,9 +28,11 @@ export default function ProductCard({
   });
 
   const handleDeleteFromCart = (found: any) => {
+    setIsLoading(true);
     if (found.quantity > 1) {
       const handleSuccess = () => {
         cartReFetch();
+        setIsLoading(false);
       };
 
       const handleFailure = (error: Object) => {
@@ -50,6 +54,7 @@ export default function ProductCard({
     } else {
       const handleSuccess = () => {
         cartReFetch();
+        setIsLoading(false);
       };
 
       const handleFailure = (error: Object) => {
@@ -70,9 +75,11 @@ export default function ProductCard({
   };
 
   const handleIncreaseInCart = (found: any) => {
+    setIsLoading(true);
     if (found) {
       const handleSuccess = () => {
         cartReFetch();
+        setIsLoading(false);
       };
 
       const handleFailure = (error: Object) => {
@@ -95,6 +102,7 @@ export default function ProductCard({
   };
 
   const handleAddToCart = (product: any) => {
+    setIsLoading(true);
     const payload = {
       name: product.name,
       price: hasDiscount
@@ -108,6 +116,7 @@ export default function ProductCard({
     if (found) {
       const handleSuccess = () => {
         cartReFetch();
+        setIsLoading(false);
       };
 
       const handleFailure = (error: Object) => {
@@ -129,6 +138,7 @@ export default function ProductCard({
     } else {
       const handleSuccess = () => {
         cartReFetch();
+        setIsLoading(false);
       };
 
       const handleFailure = (error: Object) => {
@@ -191,15 +201,27 @@ export default function ProductCard({
               </span>
             ) : null}
           </div>
+
           <div className="flex">
             {found?.quantity >= 1 ? (
               <div className="bg-dark-sky flex items-center gap-3 rounded-md text-white px-4 py-1">
-                <button onClick={() => handleDeleteFromCart(found)}>-</button>
+                <button
+                  disabled={isLoading}
+                  onClick={() => handleDeleteFromCart(found)}
+                >
+                  -
+                </button>
                 <span className="text-lg">{found.quantity}</span>
-                <button onClick={() => handleIncreaseInCart(found)}>+</button>
+                <button
+                  disabled={isLoading}
+                  onClick={() => handleIncreaseInCart(found)}
+                >
+                  +
+                </button>
               </div>
             ) : (
               <button
+                disabled={isLoading}
                 onClick={() => handleAddToCart(product)}
                 className="border border-light-gray rounded-md px-4 py-2 text-sm text-dark-gray"
               >

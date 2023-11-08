@@ -2,12 +2,12 @@ import React from "react";
 import type { Metadata } from "next";
 
 import { Toaster } from "react-hot-toast";
-import { Inter } from "next/font/google";
+import { Roboto } from "next/font/google";
 import Providers from "./providers";
 
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const roboto = Roboto({ weight: ["400"], subsets: ["cyrillic"] });
 
 export const metadata: Metadata = {
   title: "E-Bazaar App",
@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={roboto.className}>
         <Toaster />
         <Providers>{children}</Providers>
       </body>

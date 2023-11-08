@@ -56,7 +56,7 @@ export default function Home() {
   return (
     <>
       <header className="md:border-b border-light-gray mx-4 lg:mx-0">
-        <nav className="max-w-7xl xl:mx-auto mx-4 flex justify-between my-8">
+        <nav className="max-w-7xl mx-auto flex justify-between my-8">
           <Image
             className="md:w-44 md:h-10 w-32 h-8 object-contain"
             src="/logo/logo-original.png"
@@ -89,7 +89,7 @@ export default function Home() {
       </header>
 
       <main className="flex flex-col max-w-7xl xl:mx-auto mx-4">
-        <section className="my-6 flex flex-col md:flex-row gap-8">
+        <section className="my-6 flex flex-col lg:flex-row gap-8">
           <InfoCard
             imageSrc={"/assets/product.png"}
             title={`Total Product : ${
@@ -126,7 +126,7 @@ export default function Home() {
             className="w-full lg:w-11/12 bg-light-white border border-light-gray rounded-md text-sm p-3 outline-none"
           />
           <Image
-            className="absolute lg:top-4 lg:right-[240px] right-4 top-[90px]"
+            className="absolute lg:top-4 lg:right-[20%] xl:right-[19%] right-4 top-[90px]"
             height={16}
             width={16}
             src={"/assets/search-icon.png"}
@@ -137,7 +137,7 @@ export default function Home() {
             className="w-full lg:w-1/6 border border-dark-sky rounded-md px-6 py-3 text-dark-sky font-medium flex justify-center items-center gap-2"
           >
             <PlusCircleIcon className="w-6" />
-            Add Product
+            <span className="truncate">Add Product</span>
           </button>
         </section>
 
@@ -155,7 +155,7 @@ export default function Home() {
             Showing {productData?.results?.length} of{" "}
             {productData?.totalProducts} results
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {productData?.results?.length > 0 &&
               productData?.results.map((product: object, index: number) => (
                 <ProductCard
