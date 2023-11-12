@@ -1,7 +1,8 @@
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import { Dispatch, SetStateAction } from "react";
 
 type Props = {
-  setPage: any;
+  setPage: Dispatch<SetStateAction<number>>;
   dataCount: number;
   page: number;
 };

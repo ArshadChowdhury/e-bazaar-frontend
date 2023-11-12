@@ -11,7 +11,8 @@ const roboto = Roboto({ weight: ["400"], subsets: ["cyrillic"] });
 
 export const metadata: Metadata = {
   title: "E-Bazaar App",
-  description: "This is the E-Bazaar App",
+  description:
+    "This is the E-Bazaar App by Arshad to add delete update products",
 };
 
 export default function RootLayout({

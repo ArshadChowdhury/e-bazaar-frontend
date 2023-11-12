@@ -158,18 +158,19 @@ export default function ProductCard({
     }
   };
 
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = today.getMonth();
-  const date = today.getDate();
-  const todayFormatted = `${year}-0${month + 1}-${date}`;
-
   let hasDiscount = false;
 
-  product.discount_startDate <= todayFormatted &&
-  product.discount_endDate >= todayFormatted
-    ? (hasDiscount = true)
-    : (hasDiscount = false);
+  // Convert the date strings to Date objects
+  const startDate = new Date(product.discount_startDate);
+  const endDate = new Date(product.discount_endDate);
+
+  // Get the current date
+  const currentDate = new Date();
+
+  // Check if the current date is within the discount period
+  if (currentDate >= startDate && currentDate <= endDate) {
+    hasDiscount = true;
+  }
 
   return (
     <>

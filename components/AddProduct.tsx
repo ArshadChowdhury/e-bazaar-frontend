@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 import slugify from "slugify";
 import { toast } from "react-hot-toast";
@@ -8,7 +8,13 @@ import APIKit from "@/common/APIKit";
 
 import AddProductModal from "./AddProductModal";
 
-export default function AddProduct({ open, setOpen }: any) {
+type Props = {
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+  data: object;
+};
+
+export default function AddProduct({ open, setOpen }: Props) {
   const [productName, setProductName] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -23,7 +29,13 @@ export default function AddProduct({ open, setOpen }: any) {
     style: "text-dark-gray font-medium",
   };
 
-  const handleAddProduct = (payload: any) => {
+  type Payload = {
+    name: string;
+    slug: string;
+    price: any;
+  };
+
+  const handleAddProduct = (payload: Payload) => {
     if (payload.name === "") return alert("Product name is required");
     if (payload.slug === "") return alert("Product slug is required");
     if (payload.price === "") return alert("Product price is required");

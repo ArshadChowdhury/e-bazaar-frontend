@@ -55,10 +55,10 @@ export default function Home() {
 
   return (
     <>
-      <header className="md:border-b border-light-gray mx-4 lg:mx-0">
-        <nav className="max-w-7xl mx-auto flex justify-between my-8">
+      <header className="md:border-b border-light-gray lg:mx-0">
+        <nav className="max-w-7xl xl:mx-auto mx-4 flex justify-between my-8">
           <Image
-            className="md:w-44 md:h-10 w-32 h-8 object-contain"
+            className="md:w-44 md:h-10 w-32 h-8 object-contain cursor-pointer"
             src="/logo/logo-original.png"
             height={40}
             width={170}
