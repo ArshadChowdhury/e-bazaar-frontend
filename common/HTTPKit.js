@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// Creating axios instance to set the base url by ENV file and settings json as the content type
 export let request = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
@@ -7,6 +8,7 @@ export let request = axios.create({
   },
 });
 
+// Defining all the different operations I wanna perform and which will they take as input and do as output
 const HTTPKit = {
   get: (url, options) => {
     return request.get(url, options);

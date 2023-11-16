@@ -15,12 +15,14 @@ type Props = {
 };
 
 export default function AddProduct({ open, setOpen }: Props) {
+  // Defining all the fields of the modal and saving them in states.
   const [productName, setProductName] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [price, setPrice] = useState("");
   const [slug, setSlug] = useState("");
 
+  // Setting some styles here to reuse them later down
   const input = {
     style: "border border-gray-300 px-4 py-2 rounded-lg outline-none",
   };
@@ -29,6 +31,8 @@ export default function AddProduct({ open, setOpen }: Props) {
     style: "text-dark-gray font-medium",
   };
 
+  // Defining the payload types
+
   type Payload = {
     name: string;
     slug: string;
@@ -36,12 +40,13 @@ export default function AddProduct({ open, setOpen }: Props) {
   };
 
   const handleAddProduct = (payload: Payload) => {
+    // Marking all the required fields and user must input all of them
     if (payload.name === "") return alert("Product name is required");
     if (payload.slug === "") return alert("Product slug is required");
     if (payload.price === "") return alert("Product price is required");
     if (payload.price != parseInt(payload.price))
       return alert("Product price should be in whole number");
-
+    // After a successful request states should go back to default and close the modal as well
     const handleSuccess = () => {
       setOpen(false);
       setStartDate("");
@@ -55,11 +60,13 @@ export default function AddProduct({ open, setOpen }: Props) {
       console.log(error);
     };
 
+    // Making the api request of post which has been defined in apikit out there.
     const promise = APIKit.products
       .createProduct(payload)
       .then(handleSuccess)
       .catch(handleFailure);
 
+    // Returning toast to user as per the result of the api call
     return toast.promise(promise, {
       loading: "Adding product...",
       success: "Product added to collection",
@@ -67,6 +74,7 @@ export default function AddProduct({ open, setOpen }: Props) {
     });
   };
 
+  // Defining the payload here and then submitting it as an input in the handle add function
   const payload = {
     name: productName,
     price: price,
@@ -111,6 +119,7 @@ export default function AddProduct({ open, setOpen }: Props) {
                 Slug
               </label>
               <button
+                // Using the slugify library to generate a slug for the product automatically
                 onClick={() =>
                   setSlug(
                     slugify(productName, {

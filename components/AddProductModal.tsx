@@ -2,6 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 
 const AddProductModal = (props: any) => {
+  // Modal for the add product modal with the help of headless ui
   return (
     <Transition.Root show={props.open} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={props.setOpen}>

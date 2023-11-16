@@ -177,11 +177,13 @@ export default function ProductCard({
       <div className="border border-light-gray p-4">
         <div className="flex justify-center object-cover">
           <Image
-            className="rounded-md"
-            src={"https://picsum.photos/200/200"}
+            className="rounded-md w-full h-auto"
+            src={"https://picsum.photos/200/200" || "/assets/placeholder.png"}
             height={200}
             width={500}
-            alt=""
+            placeholder="blur"
+            blurDataURL={"/assets/placeholder.png"}
+            alt="product-image"
           />
         </div>
         <div className="flex flex-col gap-1 py-5">

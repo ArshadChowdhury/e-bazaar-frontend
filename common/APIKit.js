@@ -1,5 +1,6 @@
 import { request } from "./HTTPKit";
 
+// Created APIKit to have access to all the api routes I wanna hit in different pages just by calling simple functions
 const APIKit = {
   products: {
     getAllProducts: (params) => {

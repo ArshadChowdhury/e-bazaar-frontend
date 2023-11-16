@@ -2,6 +2,7 @@ import { Fragment, ReactNode } from "react";
 
 import { Dialog, Transition } from "@headlessui/react";
 
+// The prop types defind
 type Props = {
   open: boolean;
   setOpen: any;
@@ -9,6 +10,7 @@ type Props = {
 };
 
 function CartDrawer({ open, setOpen, children }: Props) {
+  // Cart Drawer with the help of headless ui
   return (
     <>
       <Transition.Root show={open} as={Fragment}>

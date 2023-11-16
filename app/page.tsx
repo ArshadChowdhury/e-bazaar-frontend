@@ -21,7 +21,9 @@ export default function Home() {
   const [searchParam, setSearchParam] = useState("");
   const [cartOpen, setCartOpen] = useState(false);
 
+  // Fetching data from backend and adding search params, pagination as required by user
   const fetch = async () => {
+    // Sanitizing the params making sure only if there is a param we'll send a request with param
     const sanitizedParams = {
       ...(searchParam.length > 0 && { search: searchParam }),
       ...(page > 1 && { page: page }),
@@ -30,30 +32,35 @@ export default function Home() {
     return data;
   };
 
+  // Tanstack query data fetching and caching with query key for products
   const {
     isLoading,
     isError,
     data: productData,
-    refetch,
+    refetch: refetchProducts,
   } = useQuery({
     queryKey: ["/all-products"],
     queryFn: fetch,
   });
 
+  // Tanstack query data fetching and caching with query key for cart
   const { data: cartData, refetch: cartRefetch } = useQuery({
     queryKey: ["/all-cart"],
     queryFn: () => APIKit.cart.getAllCartProducts().then(({ data }) => data),
   });
 
+  // Refetching the products when there's a change in search params or pagination
   useEffect(() => {
-    refetch();
+    refetchProducts();
   }, [searchParam, page]);
 
+  // Loading and Error state handling for tanstack query data fetching
   if (isLoading) return <p className="text-center">Loading...</p>;
 
   if (isError) return <p className="text-center">Error...</p>;
 
   return (
+    // Trying to follow the semantic way to structure html for better seo ranking and readability
     <>
       <header className="md:border-b border-light-gray lg:mx-0">
         <nav className="max-w-7xl xl:mx-auto mx-4 flex justify-between my-8">
@@ -90,6 +97,7 @@ export default function Home() {
 
       <main className="flex flex-col max-w-7xl xl:mx-auto mx-4">
         <section className="my-6 flex flex-col lg:flex-row gap-8">
+          {/* Made a different inforcard component which will take some props and add them inside the cards */}
           <InfoCard
             imageSrc={"/assets/product.png"}
             title={`Total Product : ${
@@ -166,12 +174,14 @@ export default function Home() {
                 />
               ))}
           </div>
+          {/* Handling empty state just in case there are no products with the search term */}
           {productData?.results.length <= 0 && (
             <EmptyState message={"Sorry we found no product with that name"} />
           )}
         </section>
 
         <aside className="py-6 flex sm:justify-end justify-center">
+          {/* We wanna show the pagination only if there's prodct, if there's no product at all we don't need pagination */}
           {productData.results.length > 0 && (
             <Pagination
               setPage={setPage}
