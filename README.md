@@ -3,7 +3,7 @@
 
 Frontend of an e-commerce project to add products, search products, add/edit quantity or delete products from cart.
 
-## [Live app link](https://e-bazaar-by-arshad.netlify.app/){:target="_blank"}
+## Check out the <a href="https://e-bazaar-by-arshad.netlify.app/" target="_blank">Live app here</a>
 
 # Table of contents
 
