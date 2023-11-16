@@ -1,9 +1,9 @@
 
 # E-bazaar frontend
 
-Frontend of an e-commerce project to add products, search products, add/edit quantity or delete products from cart.
+Frontend of an e-commerce project to add products, search products, provide discount, add/edit quantity or delete products from cart.
 
-## Check out the <a href="https://e-bazaar-by-arshad.netlify.app/" target="_blank">Live app here</a>
+## Check out the <a href="https://e-bazaar-by-arshad.netlify.app/" target="_blank">Live App</a> here
 
 # Table of contents
 
@@ -14,7 +14,7 @@ Frontend of an e-commerce project to add products, search products, add/edit qua
 
 # Project overview
 
-This is the frontend part of an e-commerce project I've worked on previously. Here you can add new product, find your product by searching, or by navigating to next page of this app, add items to the cart, update the quantity on the cart, delete items from the cart.
+This is the frontend part of an e-commerce project I've worked on previously. Here you can add new product, find your product by searching, or by navigating to that page where the product is, add items to the cart, update the quantity on the cart, delete items from the cart, provide discount start and end date.
 The cart and all products are saved in a database using MongoDB so even if you reload the page it'll all be there for you. Made the project fully responsive as well, so it looks great in all devices, have modals and side drawers to add product and see the cart. We're using Nest.js as the backend, you can check that code here - https://github.com/ArshadChowdhury/e-bazaar-backend
 
 ### Here's a glimpse of the app -
