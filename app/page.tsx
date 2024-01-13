@@ -142,7 +142,7 @@ export default function Home() {
           />
           <button
             onClick={() => setOpen(true)}
-            className="w-full lg:w-1/6 border border-dark-sky rounded-md px-6 py-3 text-dark-sky font-medium flex justify-center items-center gap-2"
+            className="w-full lg:w-1/6 border border-darker-sky rounded-md px-6 py-3 text-darker-sky font-medium flex justify-center items-center gap-2"
           >
             <PlusCircleIcon className="w-6" />
             <span className="truncate">Add Product</span>

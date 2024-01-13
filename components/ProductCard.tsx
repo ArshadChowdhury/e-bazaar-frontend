@@ -189,7 +189,7 @@ export default function ProductCard({
         <div className="flex flex-col gap-1 py-5">
           <span className="text-base font-semibold">{product.name}</span>
           <div className="flex gap-2 items-center">
-            <span className="text-lg font-semibold">
+            <span className="text-lg text-gray-600 font-semibold">
               $
               {hasDiscount
                 ? Math.ceil(
@@ -199,7 +199,7 @@ export default function ProductCard({
                 : product.price}
             </span>
             {hasDiscount ? (
-              <span className="text-sm text-mid-gray line-through">
+              <span className="text-sm text-gray-600 line-through">
                 {product.price}
               </span>
             ) : null}

@@ -12,7 +12,7 @@ const roboto = Roboto({ weight: ["400"], subsets: ["cyrillic"] });
 export const metadata: Metadata = {
   title: "E-Bazaar App",
   description:
-    "This is the E-Bazaar App by Arshad to add delete update products",
+    "This is the E-Bazaar App by Arshad to add products in database and add, delete, update products in cart. E-bazaar is designed to enhance the overall e-commerce experience.",
 };
 
 export default function RootLayout({
@@ -23,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={roboto.className}>
+        {/* Toaster to show user toast of adding,updating, deleting products to cart */}
         <Toaster />
         <Providers>{children}</Providers>
       </body>

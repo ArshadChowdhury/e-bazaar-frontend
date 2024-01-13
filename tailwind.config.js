@@ -2,7 +2,8 @@
 module.exports = {
   theme: {
     colors: {
-      "dark-sky": "#2F80ED",
+      "darker-sky": "#0369a1",
+      "dark-sky": "#2F90ED",
       "mixed-sky": "#2568C1",
       "dark-gray": "#252C32",
       "mid-gray": "#777777",
@@ -11,7 +12,7 @@ module.exports = {
       "dark-white": "#F8FBFF",
       "gray-500": "#667085",
       "gray-300": "#D0D5DD",
-      "gray-900" : "#101828",
+      "gray-900": "#101828",
       white: "#FFFFFF",
     },
     extend: {
