@@ -63,9 +63,9 @@ export default function Home() {
     // Trying to follow the semantic way to structure html for better seo ranking and readability
     <>
       <header className="md:border-b border-light-gray lg:mx-0">
-        <nav className="max-w-7xl xl:mx-auto mx-4 flex justify-between my-8">
+        <nav className="flex justify-between mx-4 my-8 max-w-7xl xl:mx-auto">
           <Image
-            className="md:w-44 md:h-10 w-32 h-8 object-contain cursor-pointer"
+            className="object-contain w-32 h-8 cursor-pointer md:w-44 md:h-10"
             src="/logo/logo-original.png"
             height={40}
             width={170}
@@ -73,7 +73,7 @@ export default function Home() {
           />
           <button
             onClick={() => setCartOpen(true)}
-            className="relative border border-light-gray px-3 py-1 md:px-6 md:py-2 rounded-md flex items-center gap-3 font-medium text-sm md:text-base"
+            className="relative flex items-center gap-3 px-3 py-1 text-sm font-medium border rounded-md border-light-gray md:px-6 md:py-2 md:text-base"
           >
             {cartData?.length > 0 && (
               <Image
@@ -95,8 +95,8 @@ export default function Home() {
         </nav>
       </header>
 
-      <main className="flex flex-col max-w-7xl xl:mx-auto mx-4">
-        <section className="my-6 flex flex-col lg:flex-row gap-8">
+      <main className="flex flex-col mx-4 max-w-7xl xl:mx-auto">
+        <section className="flex flex-col gap-8 my-6 lg:flex-row">
           {/* Made a different inforcard component which will take some props and add them inside the cards */}
           <InfoCard
             imageSrc={"/assets/product.png"}
@@ -125,13 +125,13 @@ export default function Home() {
           />
         </section>
 
-        <section className="flex flex-col-reverse lg:flex-row gap-6 relative">
+        <section className="relative flex flex-col-reverse gap-6 lg:flex-row">
           <input
             onChange={(event) => {
               setSearchParam(event.target.value);
               setPage(1);
             }}
-            className="w-full lg:w-11/12 bg-light-white border border-light-gray rounded-md text-sm p-3 outline-none"
+            className="w-full p-3 text-sm border rounded-md outline-none lg:w-11/12 bg-light-white border-light-gray"
           />
           <Image
             className="absolute lg:top-4 lg:right-[20%] xl:right-[19%] right-4 top-[90px]"
@@ -142,7 +142,7 @@ export default function Home() {
           />
           <button
             onClick={() => setOpen(true)}
-            className="w-full lg:w-1/6 border border-darker-sky rounded-md px-6 py-3 text-darker-sky font-medium flex justify-center items-center gap-2"
+            className="flex items-center justify-center w-full gap-2 px-6 py-3 font-medium border rounded-md lg:w-1/6 border-darker-sky text-darker-sky"
           >
             <PlusCircleIcon className="w-6" />
             <span className="truncate">Add Product</span>
@@ -180,7 +180,7 @@ export default function Home() {
           )}
         </section>
 
-        <aside className="py-6 flex sm:justify-end justify-center">
+        <aside className="flex justify-center py-6 sm:justify-end">
           {/* We wanna show the pagination only if there's prodct, if there's no product at all we don't need pagination */}
           {productData.results.length > 0 && (
             <Pagination
