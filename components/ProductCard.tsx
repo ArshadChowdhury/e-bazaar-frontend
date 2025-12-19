@@ -178,7 +178,7 @@ export default function ProductCard({
         <div className="flex justify-center object-cover">
           <Image
             className="rounded-md w-full h-auto"
-            src={"https://picsum.photos/200/200" || "/assets/placeholder.png"}
+            src={"https://picsum.photos/200/200"}
             height={200}
             width={500}
             placeholder="blur"
